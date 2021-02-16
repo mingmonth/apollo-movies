@@ -21,6 +21,10 @@ const GET_MOVIE = gql`
       description_intro
       rating
     }
+    suggestions(id: $id) {
+      id
+      medium_cover_image
+    }
   }
 `;
 
@@ -79,21 +83,36 @@ export default () => {
     variables: { id: +id },
   });
   return (
+    // <Container>
+    //   <Column>
+    //     <Title>{loading ? "Loading..." : data.movie.title}</Title>
+    //     {!loading && data.movie && (
+    //       <>
+    //         <Subtitle>
+    //           {data.movie.language} · {data.movie.rating}
+    //         </Subtitle>
+    //         <Description>{data.movie.description_intro}</Description>
+    //       </>
+    //     )}
+    //   </Column>
+    //   <Poster
+    //     //bg={data && data.movie ? data.movie.medium_cover_image : ""}
+    //     bg={data?.movie?.medium_cover_image}
+    //   ></Poster>
+    // </Container>
     <Container>
       <Column>
         <Title>{loading ? "Loading..." : data.movie.title}</Title>
-        {!loading && data.movie && (
+        {!loading && (
           <>
             <Subtitle>
-              {data.movie.language} · {data.movie.rating}
+              {data?.movie?.language} · {data?.movie?.rating}
             </Subtitle>
-            <Description>{data.movie.description_intro}</Description>
+            <Description>{data?.movie?.description_intro}</Description>
           </>
         )}
       </Column>
-      <Poster
-        bg={data && data.movie ? data.movie.medium_cover_image : ""}
-      ></Poster>
+      <Poster bg={data?.movie?.medium_cover_image}></Poster>
     </Container>
   );
 };
